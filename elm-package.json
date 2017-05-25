@@ -13,6 +13,7 @@
         "List018",
         "Maybe018",
         "Random018",
+        "Result018",
         "Tuple018"
     ],
     "dependencies": {
