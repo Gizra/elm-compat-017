@@ -12,6 +12,7 @@
         "Json.Decode018",
         "List018",
         "Maybe018",
+        "Random018",
         "Tuple018"
     ],
     "dependencies": {
