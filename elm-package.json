@@ -1,0 +1,21 @@
+{
+    "version": "1.0.0",
+    "summary": "Compatibility layer for use in Elm 0.17",
+    "repository": "https://github.com/Gizra/elm-compat-017.git",
+    "license": "MIT",
+    "source-directories": [
+        "src"
+    ],
+    "exposed-modules": [
+        "Basics018",
+        "Bitwise018",
+        "Json.Decode018",
+        "List018",
+        "Maybe018",
+        "Tuple018"
+    ],
+    "dependencies": {
+        "elm-lang/core": "4.0.0 <= v < 5.0.0"
+    },
+    "elm-version": "0.17.0 <= v < 0.18.0"
+}
