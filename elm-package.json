@@ -14,6 +14,7 @@
         "Maybe018",
         "Random018",
         "Result018",
+        "Task018",
         "Tuple018"
     ],
     "dependencies": {
