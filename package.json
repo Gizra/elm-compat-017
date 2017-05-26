@@ -8,10 +8,11 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "elm": "^0.17.0"
+    "elm": "^0.17.0",
+    "elm-test": "^0.17.3"
   },
   "scripts": {
-    "test": "elm-make test/Main.elm"
+    "test": "elm-test tests/Main.elm"
   },
   "repository": {
     "type": "git",
