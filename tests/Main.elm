@@ -10,6 +10,7 @@ import TestList018
 import TestMaybe018
 import TestRandom018
 import TestResult018
+import TestTask018
 
 
 main : Program Value
@@ -23,6 +24,7 @@ main =
             , TestMaybe018.all
             , TestRandom018.all
             , TestResult018.all
+            , TestTask018.all
             ]
 
 
