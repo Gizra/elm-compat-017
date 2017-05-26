@@ -5,6 +5,7 @@ import Test.Runner.Node exposing (run)
 import Json.Encode exposing (Value)
 import TestBasics018
 import TestBitwise018
+import TestJsonDecode018
 import TestList018
 
 
@@ -14,6 +15,7 @@ main =
         describe "All the tests"
             [ TestBasics018.all
             , TestBitwise018.all
+            , TestJsonDecode018.all
             , TestList018.all
             ]
 
