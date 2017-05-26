@@ -7,6 +7,7 @@ import TestBasics018
 import TestBitwise018
 import TestJsonDecode018
 import TestList018
+import TestMaybe018
 
 
 main : Program Value
@@ -17,6 +18,7 @@ main =
             , TestBitwise018.all
             , TestJsonDecode018.all
             , TestList018.all
+            , TestMaybe018.all
             ]
 
 
