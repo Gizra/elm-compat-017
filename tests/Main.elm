@@ -11,6 +11,7 @@ import TestMaybe018
 import TestRandom018
 import TestResult018
 import TestTask018
+import TestTuple018
 
 
 main : Program Value
@@ -25,6 +26,7 @@ main =
             , TestRandom018.all
             , TestResult018.all
             , TestTask018.all
+            , TestTuple018.all
             ]
 
 
