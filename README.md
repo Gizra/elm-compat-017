@@ -4,11 +4,10 @@
 
 This is a module for Elm 0.17 which allows you to use some of changes in
 Elm 0.18's [`elm-lang/core`](http://package.elm-lang.org/packages/elm-lang/core/5.1.1)
+and Elm 0.19's [`elm/core`](http://package.elm-lang.org/packages/elm/core/1.0.0)
 
 It should be said that the best way to experience all of the goodness of
-Elm 0.18 is to upgrade your project to Elm 0.18.
-And [elm-format](https://github.com/avh4/elm-format) has some nice features
-to help you do that easily.
+Elm 0.18 or 0.19 is to upgrade your project.
 
 However, there are cases in which you don't want to upgrade to the latest
 version of Elm, but would find it handy to use some of its features. For
