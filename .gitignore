@@ -1,6 +1,9 @@
 .*.swp
 .DS_Store
 elm-stuff
+elm.js
+tests/elm.js
 index.js
 index.html
 node_modules
+tests/Doc

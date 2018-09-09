@@ -8,17 +8,27 @@
     ],
     "exposed-modules": [
         "Basics018",
+        "Basics019",
         "Bitwise018",
+        "Char019",
+        "Debug019",
         "Json.Decode018",
+        "Json.Encode019",
         "List018",
         "Maybe018",
         "Random018",
+        "Random019",
+        "Regex019",
         "Result018",
+        "String019",
         "Task018",
-        "Tuple018"
+        "Time019",
+        "Tuple018",
+        "Tuple019"
     ],
     "dependencies": {
-        "elm-lang/core": "4.0.0 <= v < 5.0.0"
+        "elm-lang/core": "4.0.0 <= v < 5.0.0",
+        "justinmimbs/elm-date-extra": "2.0.0 <= v < 3.0.0"
     },
     "elm-version": "0.17.0 <= v < 0.18.0"
 }
