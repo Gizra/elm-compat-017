@@ -1,5 +1,5 @@
 {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "summary": "Compatibility layer for use in Elm 0.17",
     "repository": "https://github.com/Gizra/elm-compat-017.git",
     "license": "MIT",
