@@ -55,10 +55,10 @@ represents a full implementation of the Elm 0.18 API.
 -}
 
 import Dict exposing (Dict)
-import Http exposing (Data, stringData)
+import Http exposing (Data, RawError(..), empty, multipart, string, stringData)
 import Json.Decode as Decode
 import Json.Encode as Encode
-import Task exposing (Task)
+import Task exposing (Task, fail, succeed)
 import Task018 exposing (attempt)
 
 
@@ -116,8 +116,120 @@ send resultToMessage request_ =
 to chain together a bunch of requests (or any other tasks) in a single command.
 -}
 toTask : Request a -> Task Error a
-toTask request =
-    Debug.crash ""
+toTask (Request r) =
+    let
+        headers =
+            r.headers
+                |> List.map (\(Header key value) -> ( key, value ))
+                |> addContentType r.body
+
+        req =
+            { verb = r.method
+            , headers = headers
+            , url = r.url
+            , body = downgradeBody r.body
+            }
+
+        settings =
+            { timeout = Maybe.withDefault 0 r.timeout
+            , onStart = Nothing
+            , onProgress = Nothing
+            , desiredResponseType = Nothing -- Possibly set based on expect?
+            , withCredentials = r.withCredentials
+            }
+    in
+    Http.send settings req
+        |> Task.mapError promoteError
+        |> Task.map promoteResponse
+        |> Task018.andThen (applyExpect r.expect)
+
+
+promoteError : RawError -> Error
+promoteError err =
+    case err of
+        RawTimeout ->
+            Timeout
+
+        RawNetworkError ->
+            NetworkError
+
+
+promoteResponse : Http.Response -> Response String
+promoteResponse r =
+    let
+        body =
+            case r.value of
+                Http.Text str ->
+                    str
+
+                Http.Blob blob ->
+                    -- This can't happen, but we can't prove it to the
+                    -- compiler.
+                    ""
+    in
+    { url = r.url
+    , status =
+        { code = r.status
+        , message = r.statusText
+        }
+    , headers = r.headers
+    , body = body
+    }
+
+
+applyExpect : Expect a -> Response String -> Task Error a
+applyExpect (ExpectString decode) response =
+    if 200 <= response.status.code && response.status.code < 300 then
+        case decode response of
+            Ok value ->
+                succeed value
+
+            Err err ->
+                fail (BadPayload err response)
+
+    else
+        fail (BadStatus response)
+
+
+contentTypeKey : String
+contentTypeKey =
+    "Content-Type"
+
+
+addContentType : Body -> List ( String, String ) -> List ( String, String )
+addContentType body headers =
+    let
+        contentType =
+            case body of
+                EmptyBody ->
+                    []
+
+                StringBody mime _ ->
+                    [ ( contentTypeKey, "application/json" ) ]
+
+                MultipartBody _ ->
+                    [ ( contentTypeKey, "multipart/form-data" ) ]
+    in
+    if List.any (\( key, _ ) -> key == contentTypeKey) headers then
+        -- If there is an explicit content-type, don't change it
+        headers
+
+    else
+        -- Otherwise, add a content type for our body
+        List.append headers contentType
+
+
+downgradeBody : Body -> Http.Body
+downgradeBody b =
+    case b of
+        EmptyBody ->
+            empty
+
+        StringBody mime data ->
+            string data
+
+        MultipartBody parts ->
+            multipart parts
 
 
 {-| A `Request` can fail in a couple ways:
@@ -133,6 +245,9 @@ toTask request =
     decoder or whatever.
 
 [sc]: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+
+> Note that `BadUrl` is not actually used at the moment, because it is
+> impractical to check the URL in Elm 0.17.
 
 -}
 type Error
